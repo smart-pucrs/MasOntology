@@ -14,7 +14,7 @@ The artifact provides the following operations:
 
 | Operation | Function |
 | ------------- | ------------- |
-| **loadOntology** | load ontology from an OWL file |
+| **loadOntology** | load ontology from an <code>OWL</code> file |
 | **addInstance** | add new instance to the ontology |
 | **addInstance** | add new instance to the ontology, the new instance<br> is added as an instance of a predefined concept |
 | **isInstanceOf** | verifies if the instance <code>instanceName</code> <br>is an instance of the concept <code>conceptName</code> |
