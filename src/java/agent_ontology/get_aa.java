@@ -8,6 +8,35 @@ import jason.asSemantics.Unifier;
 import jason.asSyntax.StringTermImpl;
 import jason.asSyntax.Term;
 
+/**
+
+<p>Internal action: <b><code>.time(HH,MM,SS)</code></b>.
+
+<p>Description: gets the current time (hour, minute, and seconds).
+
+<p>Parameters:<ul>
+
+<li>+/- hours (number): the hours (0--23).</li>
+<li>+/- minutes (number): the minutes (0--59).</li>
+<li>+/- seconds (number): the seconds (0--59).</li>
+
+</ul>
+
+<p>Examples:<ul> 
+
+<li> <code>.time(H,M,S)</code>: unifies H with the current hour, M
+with the current minutes, and S with the current seconds.</li>
+
+<li> <code>.time(15,_,_)</code>: succeeds if it is now 3pm or a bit later
+but not yet 4pm.</li>
+
+</ul>
+
+@see jason.stdlib.date
+@see jason.functions.time function time
+
+*/
+
 public class get_aa extends DefaultInternalAction{
 	
 	private static InternalAction singleton = null;

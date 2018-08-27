@@ -5,7 +5,7 @@ package agent_ontology;
  * 
  * It worths noting that this object is also accounted during the mesurement.
  * 
- *  @author lucas
+ *  @author Lucas Hilgert
  * 
  * */
 

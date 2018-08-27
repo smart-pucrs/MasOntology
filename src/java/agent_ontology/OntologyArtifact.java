@@ -31,6 +31,7 @@ import cartago.OpFeedbackParam;
  * @author Lucas Hilgert
  * @author Artur Freitas
  * @author Alison Panisson
+ * @author Vitor Peres
  *
  */
 
