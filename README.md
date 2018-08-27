@@ -4,9 +4,15 @@ This project is a developing and infrastructure layer coded in CArTAgO to enable
 
 ## Getting ready
 
-First, clone or download to a local directory. To start developing, open Eclipse, and select from the toolbar:
+Getting ready
+To start developing and contributing to this repository, open Eclipse, and select from the toolbar:
 
-File > Import > Jacamo > Jacamo Project
+File > Import > Git > Projects from Git > Clone URI
+
+Copy https://github.com/smart-pucrs/MasOntology.git and paste it on the URI field.
+
+The rest should autocomplete. Add your github credentials in the Authentication fields.
+Next > Tick master > Next > Select destination folder, do not tick clonesubmodules, remote name: origin > Next > Receiving objects (after that select import existing Eclipse projects) > Next > Tick masontology and search for nested projects, do not tick add project to working sets > Finish
 
 ## CArTAgO Artifact
 
