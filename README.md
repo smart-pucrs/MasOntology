@@ -3,10 +3,10 @@ This repository contains code to enable ontology reasoning and querying features
 
 ## Requires
 
-1. Git
-2. Java
-3. Eclipse
-4. Jacamo
+1. Git - https://git-scm.com/downloads
+2. Java - https://www.java.com/pt_BR/download/
+3. Eclipse - https://www.eclipse.org/downloads/
+4. Jacamo - http://jacamo.sourceforge.net/doc/install.html
 
 ## Running the application
 
