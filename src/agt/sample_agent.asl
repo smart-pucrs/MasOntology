@@ -1,4 +1,4 @@
-// Agent sample_agent in project agent_ontology
+// Agent sample_agent in project onto
 
 /* Initial beliefs and rules */
 
@@ -7,27 +7,23 @@
 !start.
 
 /* Plans */
-
-+!start : true 
-<- 	//ontology_reader.get_tasks(100,10000,List);
-	!get_jason_instances(List).
++!start 
+	: true 
+<- 
+	.print("Let's use an ontology");
+	getInstances("Beagle", Instances);
+	.print("Instances: ",Instances);
+	!print(Instances);
+	.
 	
-+!create_ontology_artifact : true
-<- 	// ontology = ontology path 
-	makeArtifact("ontology","agent_ontology.OntologyArtifact",["ontology"],Onto);
-	print(Onto);
-	focus(cobj_1).
-	
-+!get_jason_instances(List) : true
-<- 	agent_ontology.memory_ms(M);
-	//!create_ontology_artifact;
-	for(.range(I,1,10)) {
-		.create_agent(Bob,"test.asl");
-	}
-	.wait(500);
-	agent_ontology.memory_ms(MA);
-	.print(MA-M).
++!print([]).
++!print([instance(_,H)|T])
+<-
+	.print("I have a dog ",H);
+	!print(T)
+	.
 
 { include("$jacamoJar/templates/common-cartago.asl") }
 { include("$jacamoJar/templates/common-moise.asl") }
+// uncomment the include below to have an agent compliant with its organisation
 //{ include("$moiseJar/asl/org-obedient.asl") }
