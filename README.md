@@ -1,7 +1,11 @@
 # MasOntology
 This repository contains code to enable ontology reasoning and querying features in Jason.
 
-## Requires
+![JaCaMo](https://img.shields.io/badge/JaCaMo-0.7-brightgreen.svg)
+![OwlApi](https://img.shields.io/badge/OWLApi-5.1.10-brightgreen.svg)
+[![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
+
+## Useful Tools
 
 1. Git - https://git-scm.com/downloads
 2. Java - https://www.java.com/pt_BR/download/
