@@ -7,6 +7,7 @@ This repository contains code to enable ontology reasoning and querying features
 2. Java - https://www.java.com/pt_BR/download/
 3. Eclipse - https://www.eclipse.org/downloads/
 4. Jacamo - http://jacamo.sourceforge.net/doc/install.html
+5. Gradle - https://gradle.org/install/
 
 ## Running the application
 
@@ -14,13 +15,15 @@ This repository contains code to enable ontology reasoning and querying features
 
 ``` git clone https://github.com/smart-pucrs/MasOntology.git ```
 
-2. Still in the terminal, in the project directory, enter the following commands to install the required dependencies:
-
-```sudo apt install gradle  ```
+2. Still in the terminal, in the project directory, enter the following command to configure the project to be opened in Eclipse:
 
 ```gradle eclipse```
 
+3. Open the eclipse and import the project to view it.
+
+4. You should run the project in the terminal, to do so, use the following command:
+
 ```gradle run```
 
-3. Open the eclipse and import the project to view it.
+
 
