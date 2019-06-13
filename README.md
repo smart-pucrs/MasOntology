@@ -1,5 +1,7 @@
 # MasOntology
-This repository contains code to enable ontology reasoning and querying features in Jason.
+This repository contains code to enable ontology reasoning and querying features in Jason. This work has been inspired by the researches published in: 
+- [Integrating Ontologies with Multi-Agent Systems through CArtAgO Artifacts](https://ieeexplore.ieee.org/abstract/document/7397351)
+- [Applying ontologies to the development and execution of Multi-Agent Systems](https://content.iospress.com/articles/web-intelligence/web366)
 
 ![JaCaMo](https://img.shields.io/badge/JaCaMo-0.7-brightgreen.svg)
 ![OwlApi](https://img.shields.io/badge/OWLApi-5.1.10-brightgreen.svg)
