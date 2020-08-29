@@ -1,0 +1,37 @@
+apply plugin: 'java'
+apply plugin: 'eclipse'
+
+repositories {
+    mavenCentral()
+
+    maven { url "http://jacamo.sourceforge.net/maven2" }
+    //maven { url "https://jade.tilab.com/maven/"}
+
+    maven { url "https://raw.github.com/jacamo-lang/mvn-repo/master" }
+    //maven { url "https://repo.gradle.org/gradle/libs-releases-local" }
+}
+
+dependencies {
+	implementation group: 'org.jacamo', name: 'jacamo', version: '0.9'
+  	implementation group: 'net.sourceforge.owlapi', name: 'owlapi-distribution', version: '5.1.10'
+}
+
+task run (type: JavaExec, dependsOn: 'classes') {
+    description 'runs the application'
+    group ' JaCaMo'
+    main = 'jacamo.infra.JaCaMoLauncher'
+    args 'beings.jcm'
+    classpath sourceSets.main.runtimeClasspath
+}
+
+sourceSets {
+    main {
+        java {
+            srcDir 'src/env'
+            srcDir 'src/agt'
+        }
+        resources {
+            srcDir 'src/resources'
+        }
+    }
+}
