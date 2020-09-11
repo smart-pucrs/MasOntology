@@ -1,4 +1,5 @@
 .gradle
+.vscode
 
 .classpath
 .settings
