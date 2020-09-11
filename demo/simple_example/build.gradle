@@ -1,33 +1,31 @@
-defaultTasks 'jar'
-
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
-version '2.0'
-group   'pucrs.smart'
-
 repositories {
     mavenCentral()
+    maven { url 'https://jitpack.io' }
     maven { url "http://jacamo.sourceforge.net/maven2" }
     maven { url "https://raw.github.com/jacamo-lang/mvn-repo/master" }
 }
 
 dependencies {
 	implementation group: 'org.jacamo', name: 'jacamo', version: '0.9'
-    compile group: 'org.jason-lang',     name: 'jason' ,   version: '2.5-SNAPSHOT'
   	implementation group: 'net.sourceforge.owlapi', name: 'owlapi-distribution', version: '5.1.10'
-}
-
-jar {
-    baseName 'mas-ontology'
-    manifest {
-        attributes 'Main-Class': 'masontology.main',
-                   'Specification-Title': 'MAS Ontology',
-                   'Specification-Version': project.version,
-                   'Implementation-Version': new Date().toString()
+    // implementation 'com.github.smart-pucrs:MasOntology:2.0.0'
+    implementation('com.github.smart-pucrs:MasOntology:2.0.0') {
+        version {
+            branch = 'module'
+        }
     }
 }
-// jar.dependsOn(copyJarsToBuild)
+
+task run (type: JavaExec, dependsOn: 'classes') {
+    description 'runs the application'
+    group ' JaCaMo'
+    main = 'jacamo.infra.JaCaMoLauncher'
+    args 'beings.jcm'
+    classpath sourceSets.main.runtimeClasspath
+}
 
 sourceSets {
     main {

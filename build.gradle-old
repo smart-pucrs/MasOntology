@@ -1,18 +1,17 @@
+// defaultTasks 'jar'
+
 apply plugin: 'java'
 apply plugin: 'eclipse'
 
 repositories {
     mavenCentral()
 
-    maven { url "http://jacamo.sourceforge.net/maven2" }
-    //maven { url "https://jade.tilab.com/maven/"}
-
-    maven { url "https://raw.github.com/jacamo-lang/mvn-repo/master" }
-    //maven { url "https://repo.gradle.org/gradle/libs-releases-local" }
+    maven { url "http://jacamo.sourceforge.net/maven2" }  
+    maven { url "https://jade.tilab.com/maven/"}
 }
 
 dependencies {
-	implementation group: 'org.jacamo', name: 'jacamo', version: '0.9'
+	implementation group: 'org.jacamo', name: 'jacamo', version: '0.7'
   	implementation group: 'net.sourceforge.owlapi', name: 'owlapi-distribution', version: '5.1.10'
 }
 
@@ -28,10 +27,11 @@ sourceSets {
     main {
         java {
             srcDir 'src/env'
-            srcDir 'src/agt'
+            srcDir 'src/agt'    
         }
         resources {
             srcDir 'src/resources'
         }
     }
 }
+
