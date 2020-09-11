@@ -13,7 +13,6 @@ repositories {
 }
 
 dependencies {
-	implementation group: 'org.jacamo', name: 'jacamo', version: '0.9'
     compile group: 'org.jason-lang',     name: 'jason' ,   version: '2.5-SNAPSHOT'
   	implementation group: 'net.sourceforge.owlapi', name: 'owlapi-distribution', version: '5.1.10'
 }
@@ -25,18 +24,5 @@ jar {
                    'Specification-Title': 'MAS Ontology',
                    'Specification-Version': project.version,
                    'Implementation-Version': new Date().toString()
-    }
-}
-// jar.dependsOn(copyJarsToBuild)
-
-sourceSets {
-    main {
-        java {
-            srcDir 'src/env'
-            srcDir 'src/agt'
-        }
-        resources {
-            srcDir 'src/resources'
-        }
     }
 }

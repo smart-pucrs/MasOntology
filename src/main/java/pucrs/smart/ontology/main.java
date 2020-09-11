@@ -12,7 +12,7 @@ import pucrs.smart.ontology.OwlOntoLayer;
 public class main {
 	public static void main(String[] args) {
 		try {
-			OwlOntoLayer onto = new OwlOntoLayer("/home/tabajara/Downloads/Ontology_FinalAssignment.owl");
+			OwlOntoLayer onto = new OwlOntoLayer("resources/OntologiaTeste.owl");
 				
 			OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();			
 			onto.setReasoner(reasonerFactory.createReasoner(onto.getOntology()));
