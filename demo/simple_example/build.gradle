@@ -11,12 +11,7 @@ repositories {
 dependencies {
 	implementation group: 'org.jacamo', name: 'jacamo', version: '0.9'
   	implementation group: 'net.sourceforge.owlapi', name: 'owlapi-distribution', version: '5.1.10'
-    // implementation 'com.github.smart-pucrs:MasOntology:2.0.0'
-    implementation('com.github.smart-pucrs:MasOntology:1.0.0') {
-        version {
-            branch = 'module'
-        }
-    }
+    implementation 'com.github.smart-pucrs:MasOntology:2.0.0'    
 }
 
 task run (type: JavaExec, dependsOn: 'classes') {
