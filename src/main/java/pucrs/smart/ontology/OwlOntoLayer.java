@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-
+import java.util.stream.Collectors;
 import org.semanticweb.owlapi.apibinding.OWLManager;
 import org.semanticweb.owlapi.formats.OWLXMLDocumentFormat;
 import org.semanticweb.owlapi.model.IRI;
@@ -17,7 +17,6 @@ import org.semanticweb.owlapi.model.OWLClassAssertionAxiom;
 import org.semanticweb.owlapi.model.OWLClassExpression;
 import org.semanticweb.owlapi.model.OWLDataFactory;
 import org.semanticweb.owlapi.model.OWLDataProperty;
-import org.semanticweb.owlapi.model.OWLDataPropertyExpression;
 import org.semanticweb.owlapi.model.OWLDeclarationAxiom;
 import org.semanticweb.owlapi.model.OWLDocumentFormat;
 import org.semanticweb.owlapi.model.OWLEntity;
@@ -40,12 +39,14 @@ public class OwlOntoLayer {
     public OwlOntoLayer(String ontologyFilePath) throws OWLOntologyCreationException {
         IRI iri = IRI.create((File)new File(ontologyFilePath));
         this.ontologyFilePath = iri.toString();
+        System.out.println("Java - OwlOntoLayer ontologyFilePath " + ontologyFilePath);
         this.ontology = OwlOntoLayer.loadOntology(iri);
     }
     public OwlOntoLayer(String ontologyFilePath, OWLReasoner reasoner) throws OWLOntologyCreationException {
         IRI iri = IRI.create((File)new File(ontologyFilePath));
         this.ontologyFilePath = iri.toString();
         this.ontology = OwlOntoLayer.loadOntology(iri);
+        System.out.println("Java - OwlOntoLayer reasoner " + reasoner);
         this.reasoner = reasoner;
     }
 
@@ -91,23 +92,23 @@ public class OwlOntoLayer {
     }
 
     public List<OWLClass> getClasses() {
-        return new ArrayList<OWLClass>(this.ontology.getClassesInSignature());
+    	return new ArrayList<OWLClass>(this.ontology.classesInSignature().collect(Collectors.toList()));
     }
-
-    public List<OWLDataProperty> getDataProperties() {
-        return new ArrayList<OWLDataProperty>(this.ontology.getDataPropertiesInSignature());
+    
+   public List<OWLDataProperty> getDataProperties() {
+        return new ArrayList<OWLDataProperty>(this.ontology.dataPropertiesInSignature().collect(Collectors.toList()));
     }
-
+    
     public List<OWLObjectProperty> getObjectProperties() {
-        return new ArrayList<OWLObjectProperty>(this.ontology.getObjectPropertiesInSignature());
+        return new ArrayList<OWLObjectProperty>(this.ontology.objectPropertiesInSignature().collect(Collectors.toList()));
     }
 
     public List<OWLAnnotationProperty> getAnnotationProperties() {
-        return new ArrayList<OWLAnnotationProperty>(this.ontology.getAnnotationPropertiesInSignature());
+        return this.ontology.annotationPropertiesInSignature().collect(Collectors.toList());
     }
 
     public List<OWLIndividual> getIndividuals() {
-        return new ArrayList<OWLIndividual>(this.ontology.getIndividualsInSignature());
+        return new ArrayList<OWLIndividual>(this.ontology.individualsInSignature().collect(Collectors.toList()));
     }
 
     public List<OWLClass> getSubClasses(OWLClass owlClass, boolean onlyDirectSub) {
@@ -116,30 +117,7 @@ public class OwlOntoLayer {
         }
         throw new NullPointerException("No reasoner has been defined");
     }
-
-    public List<OWLDataProperty> getSubDataProperties(OWLDataProperty property, boolean directOnly) throws NullPointerException {
-        if (this.reasoner != null) {
-            ArrayList<OWLDataProperty> subProperties = new ArrayList<OWLDataProperty>();
-            for (OWLDataPropertyExpression subProp : this.reasoner.getSubDataProperties(property, directOnly).getFlattened()) {
-                if (subProp.isAnonymous()) continue;
-                subProperties.add(subProp.asOWLDataProperty());
-            }
-            return subProperties;
-        }
-        throw new NullPointerException("No reasoner has been defined");
-    }
-
-    public List<OWLObjectProperty> getSubObjectProperties(OWLObjectProperty property, boolean directOnly) {
-        if (this.reasoner != null) {
-            ArrayList<OWLObjectProperty> subProperties = new ArrayList<OWLObjectProperty>();
-            for (OWLObjectPropertyExpression subProp : this.reasoner.getSubObjectProperties((OWLObjectPropertyExpression)property, directOnly).getFlattened()) {
-                if (subProp.isAnonymous()) continue;
-                subProperties.add(subProp.asOWLObjectProperty());
-            }
-            return subProperties;
-        }
-        throw new NullPointerException("No reasoner has been defined");
-    }
+       
 
     public Set<OWLNamedIndividual> getInstances(OWLClass concept, boolean direct) {
         return this.reasoner.getInstances((OWLClassExpression)concept, direct).getFlattened();
@@ -165,7 +143,7 @@ public class OwlOntoLayer {
         return false;
     }
 
-    public Set<OWLNamedIndividual> getInstances(OWLNamedIndividual domain, OWLObjectProperty property) {
+    public Set<OWLNamedIndividual> getObjectPropertyValues(OWLNamedIndividual domain, OWLObjectProperty property) {
         return this.reasoner.getObjectPropertyValues(domain, (OWLObjectPropertyExpression)property).getFlattened();
     }
 
@@ -173,8 +151,8 @@ public class OwlOntoLayer {
         return this.reasoner.getTypes(instance, onlyDirectTypes).getFlattened();
     }
 
-    public boolean isRelated(OWLNamedIndividual domain, OWLObjectProperty property, OWLNamedIndividual range) {
-        Set<OWLNamedIndividual> values = this.getInstances(domain, property);
+    public boolean isRelated(OWLNamedIndividual domain, OWLObjectProperty property, OWLNamedIndividual range) {    	
+        Set<OWLNamedIndividual> values = this.getObjectPropertyValues(domain, property);
         for (OWLNamedIndividual individual : values) {
             if (!individual.getIRI().getFragment().equals(range.getIRI().getFragment())) continue;
             return true;

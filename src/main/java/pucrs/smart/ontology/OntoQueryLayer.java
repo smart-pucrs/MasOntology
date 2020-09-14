@@ -1,9 +1,7 @@
 package pucrs.smart.ontology;
 
 import java.io.File;
-import java.util.List;
 import java.util.Set;
-
 import org.semanticweb.owlapi.model.IRI;
 import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataFactory;
@@ -73,8 +71,9 @@ public class OntoQueryLayer {
         return this.ontology.isRelated(this.getOWLIndividual(domainName), this.getOWLObjectProperty(propertyName), this.getOWLIndividual(rangeName));
     }
 
-    public Set<OWLNamedIndividual> getInstances(String domain, String propertyName) {
-        return this.ontology.getInstances(this.getOWLIndividual(domain), this.getOWLObjectProperty(propertyName));
+    public Set<OWLNamedIndividual> getObjectPropertyValues(String domain, String propertyName) {
+    	return this.ontology.getObjectPropertyValues(this.getOWLIndividual(domain), this.getOWLObjectProperty(propertyName));
+
     }
 
     public void addConcept(String conceptName) {
@@ -83,10 +82,6 @@ public class OntoQueryLayer {
 
     public boolean isSubConceptOf(String subConceptName, String superConceptName) {
         return this.ontology.isSubConceptOf(this.getOWLClass(subConceptName), this.getOWLClass(superConceptName));
-    }
-
-    public List<OWLClass> getConcepts() {
-        return this.ontology.getClasses();
     }
 
     public void saveOntology(String outputFile) throws OWLOntologyStorageException {
