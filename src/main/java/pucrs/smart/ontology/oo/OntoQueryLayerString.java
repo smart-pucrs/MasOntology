@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.semanticweb.owlapi.model.OWLAnnotationProperty;
-import org.semanticweb.owlapi.model.OWLClass;
 import org.semanticweb.owlapi.model.OWLDataProperty;
 import org.semanticweb.owlapi.model.OWLObjectProperty;
 
@@ -22,14 +21,6 @@ public class OntoQueryLayerString{
     	return this.ontoQuery;
     }
 
-    public List<Object> getClassNames() {
-        ArrayList<Object> classNames = new ArrayList<Object>();
-        for (OWLClass ontoClass : this.ontoQuery.getConcepts()) {
-            classNames.add(ontoClass.getIRI().getFragment());
-        }
-        return classNames;
-    }
-
     public List<Object> getObjectPropertieNames() {
         ArrayList<Object> objectProperties = new ArrayList<Object>();
         for (OWLObjectProperty objectProperty : this.ontoQuery.getOntology().getObjectProperties()) {
@@ -38,7 +29,7 @@ public class OntoQueryLayerString{
         }
         return objectProperties;
     }
-
+    
     public List<Object> getDataPropertieNames() {
         ArrayList<Object> objectProperties = new ArrayList<Object>();
         for (OWLDataProperty dataProperty : this.ontoQuery.getOntology().getDataProperties()) {
@@ -57,13 +48,5 @@ public class OntoQueryLayerString{
         return annotationProperties;
     }
 
-    public List<Object> getIndividualNames(String conceptName) {
-//        ArrayList<Object> individualsNames = new ArrayList<Object>();
-//        for (OWLNamedIndividual individual : this.ontology.getIndividuals()) {
-//            individualsNames.add(individual.getIRI().getFragment());
-//        }
-//        return individualsNames;
-    	return null;
-    }
 }
 

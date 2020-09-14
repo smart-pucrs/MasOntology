@@ -1,7 +1,6 @@
 package pucrs.smart.ontology.mas;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -26,12 +25,12 @@ public class OntologyArtifact extends Artifact {
 	private OntoQueryLayerLiteral queryEngine;
 	
 	void init(String ontologyPath) {
-		logger.info("Importinga ontology from " + ontologyPath);
+		logger.info("Importing ontology from " + ontologyPath);
 		try {
 			this.onto = new OwlOntoLayer(ontologyPath);
 			OWLReasonerFactory reasonerFactory = new StructuralReasonerFactory();			
 			this.onto.setReasoner(reasonerFactory.createReasoner(this.onto.getOntology()));
-			
+
 			queryEngine = new OntoQueryLayerLiteral(this.onto);
 			logger.info("Ontology ready!");
 		} catch (OWLOntologyCreationException e) {
@@ -51,6 +50,14 @@ public class OntologyArtifact extends Artifact {
 	}
 	
 	/**
+	 * @param instanceName Name of the new instance.
+	 */
+	@OPERATION
+	void addInstance(String instanceName) {
+		queryEngine.getQuery().addInstance(instanceName);
+	}
+	
+	/**
 	 * @param instanceName Name of the instance.
 	 * @param conceptName Name of the concept.
 	 * @return true if the <code>instanceName</code> instances <code>conceptName</code>.
@@ -67,8 +74,16 @@ public class OntologyArtifact extends Artifact {
 	@OPERATION
 	void getInstances(String conceptName, OpFeedbackParam<Literal[]> instances){
 		List<Object> individuals = queryEngine.getIndividualNames(conceptName);
-		
 		instances.set(individuals.toArray(new Literal[individuals.size()]));
+	}
+	
+	/**
+	* @return A list of ({@link OWLObjectProperty}).
+	*/
+	@OPERATION
+	void getObjectPropertyNames(OpFeedbackParam<Literal[]> objectPropertyNames){
+		List<Object> names = queryEngine.getObjectPropertyNames();
+		objectPropertyNames.set(names.toArray(new Literal[names.size()]));
 	}
 	
 	/**
@@ -98,13 +113,23 @@ public class OntologyArtifact extends Artifact {
 	 * @return A list of ({@link OWLNamedIndividual}).
 	 */
 	@OPERATION
-	void getInstances(String domain, String propertyName, OpFeedbackParam<String> instances) {
+	void getObjectPropertyValues(String domain, String propertyName, OpFeedbackParam<String> instances) {
 		List<String> individuals = new ArrayList<String>();
-		for(OWLNamedIndividual individual : queryEngine.getQuery().getInstances(domain, propertyName)) {
-			individuals.add(individual.getIRI().getFragment().replaceAll("-","_"));
+		for(OWLNamedIndividual individual : queryEngine.getQuery().getObjectPropertyValues(domain, propertyName)) {
+			individuals.add(individual.getIRI().toString().substring(individual.getIRI().toString().indexOf('#')+1));
 		}
 		instances.set(individuals.toString());
 	}
+	
+	/**
+	* @return A list of ({@link OWLClass}).
+	*/
+	@OPERATION
+	void getClassNames(OpFeedbackParam<Literal[]> classes){
+		List<Object> classNames = queryEngine.getClassNames();
+		classes.set(classNames.toArray(new Literal[classNames.size()]));
+	}
+	
 	
 	/**
 	 * @param conceptName Name of the new concept.
@@ -124,18 +149,7 @@ public class OntologyArtifact extends Artifact {
 	void isSubConcept(String subConceptName, String superConceptName, OpFeedbackParam<Boolean> isSubConcept) {
 		isSubConcept.set(queryEngine.getQuery().isSubConceptOf(subConceptName, superConceptName));
 	}
-	
-	/**
-	 * @return A list of concepts.
-	 */
-	@OPERATION
-	void getConcepts() {
-		List<OWLClass> concepts = new ArrayList<OWLClass>();
-		for (OWLClass concept : queryEngine.getQuery().getConcepts()) {
-			concepts.add(concept);
-		}
-	}
-	
+		
 	/**
 	 * @param outputFile Path to the new file in the structure of directories.
 	 * @throws OWLOntologyStorageException
@@ -149,43 +163,22 @@ public class OntologyArtifact extends Artifact {
 		}
 	}
 	
+	/**
+	* @return A list of ({@link OWLAnnotationProperty}).
+	*/
 	@OPERATION
-	void test(String concept, Object[] list) {
-		
-		Date date = new Date(System.currentTimeMillis());
-		System.out.println("Initial time "+date);
-		
-		for (int i = 0; i < list.length; i++) {
-			isInstanceOf(list[i].toString(), concept);
-		}
-		
-		date = new Date(System.currentTimeMillis());
-		System.out.println("Final time "+date);
-		
+	void getAnnotationPropertyNames(OpFeedbackParam<Literal[]> AnnotationPropertyNames){
+		List<Object> names = queryEngine.getAnnotationPropertyNames();
+		AnnotationPropertyNames.set(names.toArray(new Literal[names.size()]));
 	}
 	
+	/**
+	* @return A list of ({@link OWLDataProperty}).
+	*/
 	@OPERATION
-	void isInstanceOf(String instanceName, String conceptName) {
-		queryEngine.getQuery().isInstanceOf(instanceName, conceptName);
+	void getDataPropertyNames(OpFeedbackParam<Literal[]> dataPropertyNames){
+		List<Object> names = queryEngine.getDataPropertyNames();
+		dataPropertyNames.set(names.toArray(new Literal[names.size()]));
 	}
-	
+		
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
